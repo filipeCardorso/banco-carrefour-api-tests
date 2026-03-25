@@ -1,6 +1,6 @@
 # Banco Carrefour — API Test Automation
 
-![API Tests](https://github.com/<usuario>/banco-carrefour-api-tests/actions/workflows/api-tests.yml/badge.svg)
+![API Tests](https://github.com/filipeCardorso/banco-carrefour-api-tests/actions/workflows/api-tests.yml/badge.svg)
 
 Automated API tests for the ServeRest API, covering user CRUD operations, JWT authentication, contract validation, security, and idempotency.
 
@@ -30,7 +30,7 @@ The ServeRest API uses Portuguese endpoints (`/usuarios`, `/login`) and returns 
 ## Installation
 
 ```bash
-git clone https://github.com/<usuario>/banco-carrefour-api-tests.git
+git clone https://github.com/filipeCardorso/banco-carrefour-api-tests.git
 cd banco-carrefour-api-tests
 npm install
 cp .env.example .env
