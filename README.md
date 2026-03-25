@@ -1,33 +1,29 @@
-# Banco Carrefour — API Test Automation
+# Banco Carrefour — Automação de Testes de API
 
 ![API Tests](https://github.com/filipeCardorso/banco-carrefour-api-tests/actions/workflows/api-tests.yml/badge.svg)
 
-Automated API tests for the ServeRest API, covering user CRUD operations, JWT authentication, contract validation, security, and idempotency.
+Testes automatizados para a API ServeRest, cobrindo CRUD de usuários, autenticação JWT, validação de contrato, segurança e idempotência.
 
-## Language Note
+## Stack Tecnológica
 
-The ServeRest API uses Portuguese endpoints (`/usuarios`, `/login`) and returns Portuguese messages. Test assertions validate these Portuguese strings as they are the actual API responses.
-
-## Tech Stack
-
-| Component | Tool |
+| Componente | Ferramenta |
 |---|---|
-| Language | JavaScript (ES6+) |
-| Test Framework | Jest |
+| Linguagem | JavaScript (ES6+) |
+| Framework de Testes | Jest |
 | HTTP Client | SuperTest |
-| Fake Data | @faker-js/faker |
-| Contract Validation | jest-json-schema |
-| Reports | jest-html-reporters + jest-junit |
+| Dados Fake | @faker-js/faker |
+| Validação de Contrato | jest-json-schema |
+| Relatórios | jest-html-reporters + jest-junit |
 | CI/CD | GitHub Actions |
-| Local Environment | Docker Compose |
+| Ambiente Local | Docker Compose |
 
-## Prerequisites
+## Pré-requisitos
 
 - Node.js 20+
 - npm 9+
-- Docker and Docker Compose (optional, for local environment)
+- Docker e Docker Compose (opcional, para ambiente local)
 
-## Installation
+## Instalação
 
 ```bash
 git clone https://github.com/filipeCardorso/banco-carrefour-api-tests.git
@@ -36,114 +32,114 @@ npm install
 cp .env.example .env
 ```
 
-## Running Tests
+## Execução dos Testes
 
-### Mode 1 — Public API (default)
+### Modo 1 — API pública (padrão)
 
 ```bash
 npm test
 ```
 
-Runs against `https://serverest.dev`.
+Executa contra `https://serverest.dev`.
 
-### Mode 2 — Isolated Local Environment (Docker)
+### Modo 2 — Ambiente local isolado (Docker)
 
 ```bash
 docker-compose up --abort-on-container-exit
 ```
 
-Spins up ServeRest locally and runs all tests in isolated containers. Zero external API dependency.
+Sobe a ServeRest localmente e executa os testes em containers isolados. Zero dependência de API externa.
 
-### Running Specific Suites
+### Executar suites específicas
 
 ```bash
-npm run test:login        # Authentication tests
-npm run test:users        # User CRUD tests
-npm run test:contracts    # Contract validation tests
-npm run test:security     # Security and authentication tests
-npm run test:idempotency  # Idempotency tests
+npm run test:login        # Testes de autenticação
+npm run test:users        # Testes CRUD de usuários
+npm run test:contracts    # Testes de validação de contrato
+npm run test:security     # Testes de segurança e autenticação
+npm run test:idempotency  # Testes de idempotência
 ```
 
-## Project Structure
+## Estrutura do Projeto
 
 ```
 ├── src/
-│   ├── config/           # Environment variables and constants
-│   ├── services/         # Service Objects (encapsulate HTTP calls)
-│   ├── factories/        # Factory Pattern (test data generation)
-│   ├── schemas/          # JSON Schemas (contract validation)
-│   └── utils/            # Request wrapper and cleanup helpers
+│   ├── config/           # Variáveis de ambiente e constantes
+│   ├── services/         # Service Objects (encapsulam chamadas HTTP)
+│   ├── factories/        # Factory Pattern (geração de dados de teste)
+│   ├── schemas/          # JSON Schemas (validação de contrato)
+│   └── utils/            # Request wrapper e helpers de cleanup
 ├── tests/
-│   ├── auth/             # Login tests
-│   ├── users/            # CRUD tests (create, list, get, update, delete)
-│   ├── contracts/        # Contract tests (schema validation)
-│   ├── security/         # Authentication and HTTP method tests
-│   └── idempotency/      # Idempotency tests (DELETE and PUT)
-├── reports/              # Generated reports (HTML + JUnit XML)
-├── .github/workflows/    # CI/CD pipeline
-├── docker-compose.yml    # Local environment with ServeRest
+│   ├── auth/             # Testes de login
+│   ├── users/            # Testes CRUD (criar, listar, buscar, atualizar, deletar)
+│   ├── contracts/        # Testes de contrato (validação de schema)
+│   ├── security/         # Testes de autenticação e método HTTP
+│   └── idempotency/      # Testes de idempotência (DELETE e PUT)
+├── reports/              # Relatórios gerados (HTML + JUnit XML)
+├── .github/workflows/    # Pipeline CI/CD
+├── docker-compose.yml    # Ambiente local com ServeRest
 └── Dockerfile
 ```
 
-## Test Scenarios
+## Cenários de Teste
 
-### POST /login (7 scenarios)
-- Valid login, unregistered email, wrong password, required fields, invalid email format
+### POST /login (7 cenários)
+- Login válido, email não cadastrado, senha incorreta, campos obrigatórios, formato de email inválido
 
-### POST /usuarios (13 scenarios)
-- Basic CRUD, field validation, duplicate email, SQL injection, XSS, oversized payload, invalid Content-Type
+### POST /usuarios (13 cenários)
+- Criação, validação de campos, email duplicado, SQL injection, XSS, payload gigante, Content-Type inválido
 
-### GET /usuarios (4 scenarios)
-- Full listing, query parameter filters, unknown query parameter
+### GET /usuarios (4 cenários)
+- Listagem completa, filtros por query params, query param desconhecido
 
-### GET /usuarios/{_id} (3 scenarios)
-- Get by ID, non-existent ID, invalid ID format
+### GET /usuarios/{_id} (3 cenários)
+- Busca por ID, ID inexistente, ID com formato inválido
 
-### PUT /usuarios/{_id} (10 scenarios)
-- Update, create via PUT, duplicate email, own email, security (SQL injection, XSS)
+### PUT /usuarios/{_id} (10 cenários)
+- Atualização, criação via PUT, email duplicado, próprio email, segurança (SQL injection, XSS)
 
-### DELETE /usuarios/{_id} (3 scenarios)
-- Delete, non-existent ID, user with active cart
+### DELETE /usuarios/{_id} (3 cenários)
+- Exclusão, ID inexistente, usuário com carrinho ativo
 
-### Contract (9 scenarios)
-- JSON Schema validation for all success and error responses
+### Contrato (9 cenários)
+- Validação de JSON Schema para todas as respostas de sucesso e erro
 
-### Authentication (3 scenarios)
-- Missing token, invalid token, expired token (via /carrinhos endpoint)
+### Autenticação (3 cenários)
+- Token ausente, token inválido, token expirado (via endpoint /carrinhos)
 
-### Idempotency (2 scenarios)
-- Consecutive DELETE and PUT on the same resource
+### Idempotência (2 cenários)
+- DELETE e PUT consecutivos no mesmo recurso
 
-### Security (1 scenario)
-- Unsupported HTTP method (PATCH -> 405)
+### Segurança (1 cenário)
+- Método HTTP não suportado (PATCH → 405)
 
-**Total: 55 test scenarios**
+**Total: 55 cenários de teste**
 
-## Design Patterns
+## Padrões de Projeto
 
-- **Service Object** — encapsulates HTTP calls per resource
-- **Factory Pattern** — generates test payloads with dynamic data
-- **Data-Driven Testing** — `describe.each` for parameterized scenarios
-- **Centralized Constants** — API messages defined in a single place
+- **Service Object** — encapsula chamadas HTTP por recurso
+- **Factory Pattern** — gera payloads de teste com dados dinâmicos
+- **Data-Driven Testing** — `describe.each` para cenários parametrizados
+- **Constantes Centralizadas** — mensagens da API definidas em um único lugar
 
-## Reports
+## Relatórios
 
-After execution, reports are available in `reports/`:
-- `report.html` — visual HTML report
-- `junit.xml` — JUnit format for CI integration
+Após execução, os relatórios ficam em `reports/`:
+- `report.html` — relatório visual HTML
+- `junit.xml` — formato JUnit para integração com CI
 
-In the GitHub Actions pipeline, reports are uploaded as artifacts and displayed inline on PRs via test-reporter.
+Na pipeline do GitHub Actions, os relatórios são enviados como artefato e exibidos inline no PR via test-reporter.
 
-## CI/CD Pipeline
+## Pipeline CI/CD
 
-The pipeline runs automatically on:
-- Push to `main` or `develop`
-- Pull requests targeting `main`
-- Manual execution (workflow_dispatch)
+A pipeline executa automaticamente em:
+- Push para `main` ou `develop`
+- Pull requests para `main`
+- Execução manual (workflow_dispatch)
 
-## Technical Decisions
+## Decisões Técnicas
 
-- **`--runInBand`**: Tests run serially to avoid interference between specs that create/delete data on the same shared API.
-- **`/usuarios` endpoints do not require a JWT token**: Discovered during API exploration. Authentication tests target the `/carrinhos` endpoint, which actually enforces token validation.
-- **Security tests validate absence of side effects**: ServeRest accepts payloads with SQL injection and XSS (201). Tests verify that the API remains intact after injection.
-- **Rate limiting not enforced**: ServeRest does not implement rate limiting on the public API, so rate limit tests were intentionally omitted.
+- **`--runInBand`**: Testes executam em série para evitar interferência entre specs que criam/deletam dados na mesma API compartilhada.
+- **Endpoints `/usuarios` não requerem token JWT**: Descoberto durante exploração da API. Testes de autenticação foram direcionados ao endpoint `/carrinhos` que de fato exige token.
+- **Testes de segurança validam ausência de efeito colateral**: A ServeRest aceita payloads com SQL injection e XSS (201). Os testes verificam que a API continua íntegra após a injeção.
+- **Rate limiting não implementado**: A ServeRest não implementa rate limiting na API pública, portanto testes de rate limit foram intencionalmente omitidos.
