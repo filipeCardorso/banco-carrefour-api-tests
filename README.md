@@ -1,3 +1,10 @@
+![Jest](https://img.shields.io/badge/Jest_30-C21325?style=flat-square&logo=jest&logoColor=white)
+![Supertest](https://img.shields.io/badge/Supertest-FF6C37?style=flat-square&logo=node.js&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat-square&logo=eslint&logoColor=white)
+
 # Banco Carrefour — Automação de Testes de API
 
 ![API Tests](https://github.com/filipeCardorso/banco-carrefour-api-tests/actions/workflows/api-tests.yml/badge.svg)
